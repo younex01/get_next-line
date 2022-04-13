@@ -35,30 +35,6 @@ size_t	ft_strlcat(char *dest, const char *src, size_t size)
 	return (len + lendest);
 }
 
-void	ft_bzero(void *str, size_t n)
-{
-	char				*table;
-
-	table = (char *)str;
-	if (n > 0)
-	{
-		while (n-- > 0)
-			*table++ = (unsigned char)0;
-	}
-}
-
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	void		*table;
-
-	table = (void *)malloc(count * size);
-	if (table == NULL)
-		return (0);
-	ft_bzero(table, count * size);
-	return (table);
-}
-
 char	*ft_strjoin(char *str1, char *str2)
 {
 	char	*table;
@@ -70,9 +46,10 @@ char	*ft_strjoin(char *str1, char *str2)
 	table = 0;
 	len2 = ft_strlen((char *)str2);
 	len1 = ft_strlen((char *)str1);
-	table = (char *)ft_calloc(sizeof(char) * ((len1 + len2) + 1), sizeof(char));
+	table = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
 	if (table == 0)
 		return (0);
+	table[0] = 0;
 	if(len1)
 	{
 		ft_strlcat(table, str1, len1 + 1);
