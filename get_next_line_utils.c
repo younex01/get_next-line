@@ -1,10 +1,22 @@
-#include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/14 00:29:22 by yelousse          #+#    #+#             */
+/*   Updated: 2022/04/14 00:57:31 by yelousse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "get_next_line.h"
 
 size_t	ft_strlen(const char *str)
 {
 	size_t	index;
-	if(!str)
+
+	if (!str)
 		return (0);
 	index = 0;
 	while (str[index] != '\0')
@@ -50,12 +62,28 @@ char	*ft_strjoin(char *str1, char *str2)
 	if (table == 0)
 		return (0);
 	table[0] = 0;
-	if(len1)
+	if (len1)
 	{
 		ft_strlcat(table, str1, len1 + 1);
 		free(str1);
 	}
-	if(len2)
+	if (len2)
 		ft_strlcat(table, str2, len1 + len2 + 1);
 	return (table);
+}
+
+int	line_size(char *stash)
+{
+	int	i;
+
+	if (!stash)
+		return (0);
+	i = 0;
+	while (stash[i])
+	{
+		if (stash[i] == '\n')
+			return (i + 1);
+		i++;
+	}
+	return (i);
 }
