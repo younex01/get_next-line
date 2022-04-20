@@ -6,15 +6,15 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 00:29:16 by yelousse          #+#    #+#             */
-/*   Updated: 2022/04/14 00:52:04 by yelousse         ###   ########.fr       */
+/*   Updated: 2022/04/19 21:29:35 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen(const char *str)
+int	ft_strlen(char *str)
 {
-	size_t	index;
+	int	index;
 
 	if (!str)
 		return (0);
@@ -24,55 +24,44 @@ size_t	ft_strlen(const char *str)
 	return (index);
 }
 
-size_t	ft_strlcat(char *dest, const char *src, size_t size)
+int	ft_strlcat(char *dst, char *src)
 {
-	size_t	len;
-	size_t	lendest;
-	size_t	index;
-	size_t	index1;
+	int	i;
+	int	dlen;
 
-	index1 = 0;
-	len = ft_strlen(src);
-	lendest = ft_strlen(dest);
-	index = lendest;
-	if (lendest >= size)
-		return (len + size);
-	while (src[index1] != '\0' && index < size - 1)
-	{
-		dest[index] = src[index1];
-		index1++;
-		index++;
-	}
-	dest[index] = '\0';
-	return (len + lendest);
-}
-
-char	*ft_strjoin(char *str1, char *str2)
-{
-	char	*table;
-	int		index;
-	int		len1;
-	int		len2;
-
-	index = 0;
-	table = 0;
-	len2 = ft_strlen((char *)str2);
-	len1 = ft_strlen((char *)str1);
-	table = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
-	if (table == 0)
+	if (src == 0)
 		return (0);
-	table[0] = 0;
-	if (len1)
+	dlen = ft_strlen(dst);
+	i = 0;
+	while (src[i])
 	{
-		ft_strlcat(table, str1, len1 + 1);
-		free(str1);
+		dst[dlen + i] = src[i];
+		i++;
 	}
-	if (len2)
-		ft_strlcat(table, str2, len1 + len2 + 1);
-	return (table);
+	dst[i + dlen] = '\0';
+	return (0);
 }
 
-int	line_size(char *stash)
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*str;
+	int		len;
+
+	len = 0;
+	if (s1)
+		len = ft_strlen(s1);
+	len += ft_strlen(s2);
+	str = (char *)malloc((len + 1) * sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	*str = 0;
+	ft_strlcat(str, s1);
+	ft_strlcat(str, s2);
+	free(s1);
+	return (str);
+}
+
+int	ft_line_size(char *stash)
 {
 	int	i;
 

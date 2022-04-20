@@ -6,20 +6,20 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 00:28:59 by yelousse          #+#    #+#             */
-/*   Updated: 2022/04/14 00:57:38 by yelousse         ###   ########.fr       */
+/*   Updated: 2022/04/20 21:08:20 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*rest(char *stash)
+char	*ft_rest(char *stash)
 {
 	int		i;
 	int		len;
 	int		j;
 	char	*tmp;
 
-	i = line_size(stash);
+	i = ft_line_size(stash);
 	j = 0;
 	len = ft_strlen(stash);
 	if (i >= len)
@@ -40,16 +40,16 @@ char	*rest(char *stash)
 	return (tmp);
 }
 
-char	*check_line(char *stash)
+char	*ft_check_line(char *stash)
 {
 	char	*line;
 	int		i;
 	int		len;
 
-	len = line_size(stash);
+	len = ft_line_size(stash);
 	if (!len)
 		return (NULL);
-	line = malloc(len);
+	line = malloc(len + 1);
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -67,7 +67,7 @@ char	*check_line(char *stash)
 	return (line);
 }
 
-int	find_next_line(char *stash)
+int	ft_find_next_line(char *stash)
 {
 	int	i;
 
@@ -101,7 +101,7 @@ char	*ft_loop(char *stash, int fd)
 		if (nb == 0)
 			break ;
 		stash = ft_strjoin(stash, buffer);
-		if (find_next_line(stash))
+		if (ft_find_next_line(stash))
 			break ;
 	}
 	free(buffer);
@@ -113,22 +113,10 @@ char	*get_next_line(int fd)
 	char static	*stash;
 	char		*line;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
 	stash = ft_loop(stash, fd);
-	line = check_line(stash);
-	stash = rest(stash);
+	line = ft_check_line(stash);
+	stash = ft_rest(stash);
 	return (line);
 }
-
-// int main()
-// {
-// 	int fd1 = open("foo.txt", O_RDONLY);
-// 	if (fd1 < 0) 
-//     { 
-//         perror("c1"); 
-//         exit(1); 
-//     } 
-//     printf("%s", get_next_line(fd1)); 
-// 	printf("%s", get_next_line(fd1)); 
-// 	printf("%s", get_next_line(fd1));
-
-// }
